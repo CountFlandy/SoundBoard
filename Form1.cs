@@ -93,6 +93,8 @@ namespace AudioTestingApp
             SoundFileArray[19] = buttonPlayBack20SoundFile;
         }
 
+        //TODO: BUG. CURRENTLY THIS ONLY WRITES A SINGLE , TO THE FILE.
+        //TODO: Implement a check if name already is in use, and to override or delete it somehow?
         private void buttonSavePreset_Click(object sender, EventArgs e)
         {
             var filePath = "";
@@ -104,37 +106,32 @@ namespace AudioTestingApp
             exeFilePath = AppDomain.CurrentDomain.BaseDirectory;
             string textFileName = textBox1.Text;
             //TODO: Ensure this is right
-            fullFilePath = exeFilePath + "/Presets" +  textFileName + ".txt";
-            File.Create(fullFilePath);
+            fullFilePath = exeFilePath + "Presets\\" +  textFileName + ".txt";
+            File.Create(fullFilePath).Close();
+            //Getting Error that .txt file is being used by another process
 
             foreach (var item in SoundFileArray)
-            {                
-                File.WriteAllText(fullFilePath, SoundFileArray[i]);
-                File.WriteAllText(fullFilePath, ",");
-                i++;
+            {
+                File.AppendAllText(fullFilePath, item);
+                File.AppendAllText(fullFilePath, ",");
 
-                //TODO: Do something then catch error(s)?
-                
+                //TODO: Do something then catch error(s)?   
             }
 
             foreach(var item in ButtonArray)
             {
-
-                File.WriteAllText(fullFilePath, ButtonArray[i].Text);
-                File.WriteAllText(fullFilePath, ",");
-                j++;
+                File.AppendAllText(fullFilePath, item.Text);
+                File.AppendAllText(fullFilePath, ",");
                 
                 //TODO: Do something then catch error(s)?
-                
             }
         }
 
         private void buttonLoadNewPreset_Click(object sender, EventArgs e)
         {
-            //TODO: Create check for .txt files and test to see if this and saving presets works
             var filePath = string.Empty;
-            var fileContent = string.Empty;
             var fileName = string.Empty;
+            string fileExtension = string.Empty;
             int i = 0;
             int j = 0;
             int z = 0;
@@ -143,13 +140,17 @@ namespace AudioTestingApp
             using (OpenFileDialog ofg = new OpenFileDialog())
             {
                 ofg.InitialDirectory = "c\\";
-                ofg.Filter = "All files (*.*)|*.*";
+                ofg.Filter = "Text Files (*.txt)|*.txt";
 
                 if(ofg.ShowDialog() == DialogResult.OK)
                 {
-                    //TODO: Check for .txt file here, if not have user try again
-                    
-                    
+                    fileExtension = ofg.FileName;
+                    fileExtension.Trim();
+                    fileExtension.Remove(fileExtension.Length - 4);
+                    if(fileExtension != ".txt")
+                    {
+                        //TODO: Catch error. Shouldn't be possible with the filter.
+                    }
                     filePath = ofg.FileName;
                     fileName = ofg.SafeFileName;
                 }
@@ -169,9 +170,12 @@ namespace AudioTestingApp
             foreach(var item in TextArray)
             {
                 //TODO: Create check for when SoundFileArray[] maxes out
-                if(y <= 19)
+                //TODO: Create a check for when SoundFileArray does NOT get filled up with all 19/20 entries
+                if(y <= 19 && SoundFileArray[19] != null)
                 {
-                    foreach(var item2 in SoundFileArray)
+
+                    //Maybe only use the base foreach to itterate across both Array's and then somehoe tell when SoundFileArray ends and ButtonArray begins?
+                    foreach (var item2 in SoundFileArray)
                     {
                         SoundFileArray[i] = TextArray[x];
                         i++;
@@ -180,7 +184,8 @@ namespace AudioTestingApp
                     y++;
                 }
                 //TODO: Create check for when ButtonArray[] maxes out
-                if (y >= 19)
+                //TODO: Create a check for when ButtonArray[] does NOT get filled up with all 19/20 entries
+                if (y >= 19 && y <= 38 && ButtonArray[19].Text != "Empty")
                 {
                     foreach(var item3 in ButtonArray)
                     {
@@ -195,9 +200,6 @@ namespace AudioTestingApp
 
         private void buttonLoadNew_Click(object sender, EventArgs e)
         {
-            //LoadButtons();
-            //LoadSoundFileArray();
-
             var filePath = string.Empty;
             var fileContent = string.Empty;
             var fileName = string.Empty;
@@ -218,6 +220,7 @@ namespace AudioTestingApp
             }
 
             //TODO: Implement catch for if any value in SoundFileArray[i] = null
+            //TODO: Catch when user tries to enter a sound but array is full
             while (z == 0)
             {
                 foreach (var item in SoundFileArray)
@@ -243,6 +246,7 @@ namespace AudioTestingApp
             //TODO: Catch it or do something when all 20 are full
         }
 
+        //TODO: Replace the specific references here with array references, should fix an issue
         private void button1Exit_Click(object sender, EventArgs e)
         {
             buttonPlayback1.Text = "Empty";
