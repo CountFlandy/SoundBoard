@@ -4,9 +4,6 @@ using System.IO;
 //Yes this is inefficient. I intend to itterate on it as I get better at C#
 //Yes I shouldnt be using Windows Forms. But I wanted to make something quickly and lightweight for myself. 
 
-
-//Loading two sounds causes the original to cause an error
-
 namespace AudioTestingApp
 {
     public partial class Form1 : Form
@@ -93,7 +90,6 @@ namespace AudioTestingApp
             SoundFileArray[19] = buttonPlayBack20SoundFile;
         }
 
-        //TODO: BUG. CURRENTLY THIS ONLY WRITES A SINGLE , TO THE FILE.
         //TODO: Implement a check if name already is in use, and to override or delete it somehow?
         private void buttonSavePreset_Click(object sender, EventArgs e)
         {
@@ -101,14 +97,12 @@ namespace AudioTestingApp
             var exeFilePath = "";
             var fullFilePath = "";
             int i = 0;
-            int j = 0;     
+            int j = 0;
 
             exeFilePath = AppDomain.CurrentDomain.BaseDirectory;
             string textFileName = textBox1.Text;
-            //TODO: Ensure this is right
             fullFilePath = exeFilePath + "Presets\\" +  textFileName + ".txt";
             File.Create(fullFilePath).Close();
-            //Getting Error that .txt file is being used by another process
 
             foreach (var item in SoundFileArray)
             {
@@ -130,7 +124,7 @@ namespace AudioTestingApp
         private void buttonLoadNewPreset_Click(object sender, EventArgs e)
         {
             var filePath = string.Empty;
-            var fileName = string.Empty;
+            //var fileName = string.Empty;
             string fileExtension = string.Empty;
             int i = 0;
             int j = 0;
@@ -152,48 +146,39 @@ namespace AudioTestingApp
                         //TODO: Catch error. Shouldn't be possible with the filter.
                     }
                     filePath = ofg.FileName;
-                    fileName = ofg.SafeFileName;
+                    //fileName = ofg.SafeFileName;
                 }
             }
 
             string text = File.ReadAllText(filePath);
             string[] TextArray = new string[40];
-            TextArray = Text.Split(",");
+            TextArray = text.Split(",");
             foreach(var item in TextArray)
             {
                 TextArray[z].Trim(trimChar);
                 z++;
             }
 
-            int y = 0;
+            int arraySize = TextArray.Length / 2;
+
             int x = 0;
             foreach(var item in TextArray)
             {
-                //TODO: Create check for when SoundFileArray[] maxes out
-                //TODO: Create a check for when SoundFileArray does NOT get filled up with all 19/20 entries
-                if(y <= 19 && SoundFileArray[19] != null)
+                if(x <= arraySize - 1 && i < arraySize)
                 {
-
-                    //Maybe only use the base foreach to itterate across both Array's and then somehoe tell when SoundFileArray ends and ButtonArray begins?
-                    foreach (var item2 in SoundFileArray)
-                    {
-                        SoundFileArray[i] = TextArray[x];
-                        i++;
-                        x++;
-                    }
-                    y++;
+                    SoundFileArray[i] = TextArray[x];
+                    i++;
+                    x++;
                 }
-                //TODO: Create check for when ButtonArray[] maxes out
-                //TODO: Create a check for when ButtonArray[] does NOT get filled up with all 19/20 entries
-                if (y >= 19 && y <= 38 && ButtonArray[19].Text != "Empty")
+                else if(x > arraySize - 1 && j < arraySize)
                 {
-                    foreach(var item3 in ButtonArray)
-                    {
-                        ButtonArray[j].Text = TextArray[x];
-                        j++;
-                        x++;
-                    }
-                    y++;
+                    ButtonArray[j].Text = TextArray[x];
+                    j++;
+                    x++;
+                }
+                else
+                {
+                    //TODO: Catch error
                 }
             }
         }
@@ -221,6 +206,7 @@ namespace AudioTestingApp
 
             //TODO: Implement catch for if any value in SoundFileArray[i] = null
             //TODO: Catch when user tries to enter a sound but array is full
+
             while (z == 0)
             {
                 foreach (var item in SoundFileArray)
@@ -243,109 +229,107 @@ namespace AudioTestingApp
                     }
                 }
             }
-            //TODO: Catch it or do something when all 20 are full
         }
 
-        //TODO: Replace the specific references here with array references, should fix an issue
         private void button1Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback1.Text = "Empty";
-            buttonPlayBack1SoundFile = "";
+            ButtonArray[0].Text = "Empty";
+            SoundFileArray[0] = "";
         }
         private void button2Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback2.Text = "Empty";
-            buttonPlayBack2SoundFile = "";
+            ButtonArray[1].Text = "Empty";
+            SoundFileArray[1] = "";
         }
         private void button3Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback3.Text = "Empty";
-            buttonPlayBack3SoundFile = "";
+            ButtonArray[2].Text = "Empty";
+            SoundFileArray[2] = "";
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            buttonPlayback4.Text = "Empty";
-            buttonPlayBack4SoundFile = "";
+            ButtonArray[3].Text = "Empty";
+            SoundFileArray[3] = "";
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            buttonPlayback5.Text = "Empty";
-            buttonPlayBack5SoundFile = "";
+            ButtonArray[4].Text = "Empty";
+            SoundFileArray[4] = "";
         }
         private void button6Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback6.Text = "Empty";
-            buttonPlayBack6SoundFile = "";
+            ButtonArray[5].Text = "Empty";
+            SoundFileArray[5] = "";
         }
         private void button7Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback7.Text = "Empty";
-            buttonPlayBack7SoundFile = "";
+            ButtonArray[6].Text = "Empty";
+            SoundFileArray[6] = "";
         }
         private void button8Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback8.Text = "Empty";
-            buttonPlayBack8SoundFile = "";
+            ButtonArray[7].Text = "Empty";
+            SoundFileArray[7] = "";
         }
         private void button9Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback9.Text = "Empty";
-            buttonPlayBack9SoundFile = "";
+            ButtonArray[8].Text = "Empty";
+            SoundFileArray[8] = "";
         }
         private void button10Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback10.Text = "Empty";
-            buttonPlayBack10SoundFile = "";
+            ButtonArray[9].Text = "Empty";
+            SoundFileArray[9] = "";
         }
         private void button11Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback11.Text = "Empty";
-            buttonPlayBack11SoundFile = "";
+            ButtonArray[10].Text = "Empty";
+            SoundFileArray[10] = "";
         }
         private void button12Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback12.Text = "Empty";
-            buttonPlayBack12SoundFile = "";
+            ButtonArray[11].Text = "Empty";
+            SoundFileArray[11] = "";
         }
         private void button13Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback13.Text = "Empty";
-            buttonPlayBack13SoundFile = "";
+            ButtonArray[12].Text = "Empty";
+            SoundFileArray[12] = "";
         }
         private void button14Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback14.Text = "Empty";
-            buttonPlayBack14SoundFile = "";
+            ButtonArray[13].Text = "Empty";
+            SoundFileArray[13] = "";
         }
         private void button15Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback15.Text = "Empty";
-            buttonPlayBack15SoundFile = "";
+            ButtonArray[14].Text = "Empty";
+            SoundFileArray[14] = "";
         }
         private void button16Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback16.Text = "Empty";
-            buttonPlayBack16SoundFile = "";
+            ButtonArray[15].Text = "Empty";
+            SoundFileArray[15] = "";
         }
         private void button17Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback17.Text = "Empty";
-            buttonPlayBack17SoundFile = "";
+            ButtonArray[16].Text = "Empty";
+            SoundFileArray[16] = "";
         }
         private void button18Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback18.Text = "Empty";
-            buttonPlayBack18SoundFile = "";
+            ButtonArray[17].Text = "Empty";
+            SoundFileArray[17] = "";
         }
         private void button19Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback19.Text = "Empty";
-            buttonPlayBack19SoundFile = "";
+            ButtonArray[18].Text = "Empty";
+            SoundFileArray[18] = "";
         }
         private void button20Exit_Click(object sender, EventArgs e)
         {
-            buttonPlayback20.Text = "Empty";
-            buttonPlayBack20SoundFile = "";
+            ButtonArray[19].Text = "Empty";
+            SoundFileArray[19] = "";
         }
 
         private void buttonPlayback1_Click(object sender, EventArgs e)

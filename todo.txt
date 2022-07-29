@@ -5,10 +5,8 @@
 4: Clean up code
 5: Multithread App?
 6: Improve adding sound file system. Potentially allow multiple files to be selected at a time?
-7: Finish creating load presets
 
 
 KNOWN BUGS:
 - No Error catching of any sort
-- Potentially saving a preset that does not have all 20 buttons full may likely not save properly, or load properly (when that works)
 

@@ -1,4 +1,8 @@
 ﻿7/29/22
+- Load Preset actually works
+- Both Load and Save Presets should now account for if the entire array is smaller than 20
+
+7/28/22
 - Save Preset actually works
 	-- This functions by itterating across every sound file saved to the sound file array, and writing its value to a text file and a "," after every entry. On that same file, it also writes the content of the button.text(s) to the same file, also appended with a ","
 - Load Preset no longer crashes, it just plain doesn't work. Progress!
