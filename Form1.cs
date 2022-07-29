@@ -8,7 +8,6 @@ namespace AudioTestingApp
 {
     public partial class Form1 : Form
     {
-
         string buttonPlayBack1SoundFile;
         string buttonPlayBack2SoundFile;
         string buttonPlayBack3SoundFile;
@@ -116,7 +115,6 @@ namespace AudioTestingApp
             {
                 File.AppendAllText(fullFilePath, item.Text);
                 File.AppendAllText(fullFilePath, ",");
-                
                 //TODO: Do something then catch error(s)?
             }
         }
@@ -124,7 +122,6 @@ namespace AudioTestingApp
         private void buttonLoadNewPreset_Click(object sender, EventArgs e)
         {
             var filePath = string.Empty;
-            //var fileName = string.Empty;
             string fileExtension = string.Empty;
             int i = 0;
             int j = 0;
@@ -146,7 +143,6 @@ namespace AudioTestingApp
                         //TODO: Catch error. Shouldn't be possible with the filter.
                     }
                     filePath = ofg.FileName;
-                    //fileName = ofg.SafeFileName;
                 }
             }
 

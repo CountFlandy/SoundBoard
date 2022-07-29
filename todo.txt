@@ -1,7 +1,6 @@
 ﻿TODO:
 1: Create all TODO: Catch Error catches
 2: Spruce up UI
-3: Potentially connect Soundboard to Discord Bot to play SFX through?
 4: Clean up code
 5: Multithread App?
 6: Improve adding sound file system. Potentially allow multiple files to be selected at a time?
